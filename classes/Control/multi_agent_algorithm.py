@@ -68,17 +68,17 @@ class multi_agent_algorithm:
 
 
         #Get pixel coordinate information in opencv frame and convrt to ums
-        start_robot1_x = int(p1[0] * self.pix2metric)
-        start_robot1_y = int(p1[1] * self.pix2metric) 
+        start_robot1_x = int(p1[0] )
+        start_robot1_y = int(p1[1] ) 
 
-        target_robot1_x = int(t1[0] * self.pix2metric)
-        target_robot1_y = int(t1[1] * self.pix2metric)
+        target_robot1_x = int(t1[0] )
+        target_robot1_y = int(t1[1] )
 
-        start_robot2_x = int(p2[0] * self.pix2metric)
-        start_robot2_y = int(p2[1] * self.pix2metric) 
+        start_robot2_x = int(p2[0] )
+        start_robot2_y = int(p2[1] ) 
         
-        target_robot2_x = int(t2[0] * self.pix2metric)
-        target_robot2_y = int(t2[1] * self.pix2metric) 
+        target_robot2_x = int(t2[0] )
+        target_robot2_y = int(t2[1] ) 
 
         print("robot1 position (opencv, um):", (start_robot1_x, start_robot1_y))
 
@@ -177,10 +177,17 @@ class multi_agent_algorithm:
         
        
         for i in range(len(self.opencv_um_path_robot1)):  
+<<<<<<< HEAD
             cv2.circle(frame,(int(self.opencv_um_path_robot1[i,0] / self.pix2metric), int(self.opencv_um_path_robot1[i,1]/ self.pix2metric)),4,(255,0,0), -1,)
 
         for j in range(len(self.opencv_um_path_robot2)):  
             cv2.circle(frame,(int(self.opencv_um_path_robot2[j,0] / self.pix2metric), int(self.opencv_um_path_robot2[j,1]/ self.pix2metric)),4,(0,165,255), -1,)
+=======
+            cv2.circle(frame,(int(self.opencv_um_path_robot1[i,0] ), int(self.opencv_um_path_robot1[i,1])),2,(255,0,0), -1,)
+
+        for j in range(len(self.opencv_um_path_robot2)):  
+            cv2.circle(frame,(int(self.opencv_um_path_robot2[j,0] ), int(self.opencv_um_path_robot2[j,1])),2,(0,165,255), -1,)
+>>>>>>> 80741c9... removed pixel2meter for policy
 
 
 
@@ -204,7 +211,7 @@ class multi_agent_algorithm:
         
         # plotting target position node for robot 2
         bot1_target_x_opencv, bot1_target_y_opencv = self.myMapper.xy_to_pixel(bot1_target_x, bot1_target_y)
-        cv2.circle(frame,(int(bot1_target_x_opencv / self.pix2metric), int(bot1_target_y_opencv / self.pix2metric)),10,(255,0,0), -1,)
+        cv2.circle(frame,(int(bot1_target_x_opencv), int(bot1_target_y_opencv)),10,(255,0,0), -1,)
 
 
         bot2_target_x = self.path[self.node,2]
@@ -212,7 +219,7 @@ class multi_agent_algorithm:
 
         # plotting target position node for robot 2
         bot2_target_x_opencv, bot2_target_y_opencv = self.myMapper.xy_to_pixel(bot2_target_x, bot2_target_y)
-        cv2.circle(frame,(int(bot2_target_x_opencv / self.pix2metric), int(bot2_target_y_opencv / self.pix2metric)),10,(255,0,0), -1,)
+        cv2.circle(frame,(int(bot2_target_x_opencv), int(bot2_target_y_opencv)),10,(255,0,0), -1,)
 
 
          #calculate error between node and robot in mehdi/um
