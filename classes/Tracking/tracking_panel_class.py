@@ -57,7 +57,7 @@ def eventFilter(self, object, event):
 
                     if self.ui.robotmask_radio.isChecked():
                         # Create new robot instance
-                        robot_crop_length_in_pixels = int(self.ui.robotcroplengthbox.value()  / self.tracker.pixel2um)
+                        robot_crop_length_in_pixels = int(self.ui.robotcroplengthbox.value()  / self.tracker.pixel2um)  #robotcroplengthbox QBox value in um... need to convert to pixels
 
                         x_1 = int(newx - robot_crop_length_in_pixels / 2)
                         y_1 = int(newy - robot_crop_length_in_pixels / 2)
