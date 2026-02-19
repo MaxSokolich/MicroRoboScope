@@ -247,12 +247,18 @@ class multi_agent_algorithm:
 
 
         dist_error = np.sqrt(error_bot1[0] ** 2 + error_bot1[1] ** 2)
+        print("dist_error = ", dist_error)
 
 
         if (dist_error < self.bot1_threshold) or (self.counter > 10):
             self.counter = 0
+            if (dist_error < self.bot1_threshold):
+                print('reached to ', self.node, 'th node')
+            if self.counter > 10:
+                print('max iterations reached ', self.node, 'th node')
             if self.node < len(self.path)-1:
                 self.node += 1
+                print("node = ", self.node)
             
        
            
