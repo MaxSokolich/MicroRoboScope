@@ -43,7 +43,7 @@ class VideoThread(QThread):
         self.robot_mask_upper = 128
         self.robot_mask_dilation = 0  
         self.robot_mask_blur = 0
-        self.robot_crop_length = 40
+        self.robot_crop_length = 115
         self.robot_mask_flag = True
         self.robot_list = []
 
@@ -52,7 +52,7 @@ class VideoThread(QThread):
         self.cell_mask_upper = 128
         self.cell_mask_dilation = 0
         self.cell_mask_blur = 0
-        self.cell_crop_length = 40
+        self.cell_crop_length = 115
         self.cell_mask_flag = False
         self.cell_list = []
 
@@ -265,7 +265,7 @@ class VideoThread(QThread):
         else:
             recorded_cropped_frame = np.zeros((self.crop_length_record, self.crop_length_record, 3), dtype=np.uint8) 
             croppedmask = np.zeros((310, 310, 3), dtype=np.uint8)
-        
+
         return croppedmask, recorded_cropped_frame
     
 
@@ -321,16 +321,20 @@ class VideoThread(QThread):
                         new_crop = [int(x1_new), int(y1_new), int(w_new), int(h_new)]
 
 
-                        #find velocity:
+                        velocity = [0,0,0]
+                        acceleration = [0,0,0]
                         if len(cell.position_list) > self.memory:
                             vx = (current_pos[0] - cell.position_list[-self.memory][0]) * (self.fps.get_fps()/self.memory) #* self.pixel2um
                             vy = (current_pos[1] - cell.position_list[-self.memory][1]) * (self.fps.get_fps()/self.memory) #* self.pixel2um
-                            magnitude = np.sqrt(vx**2 + vy**2)
-
-                            velocity = [vx,vy,magnitude]
-
-                        else:
-                            velocity = [0,0,0]
+                            vmagnitude = np.sqrt(vx**2 + vy**2)
+                            velocity = [vx,vy,vmagnitude]
+                       
+                            
+                        if len(cell.velocity_list) > self.memory:
+                            ax = (vx - cell.velocity_list[-self.memory][0]) * (self.fps.get_fps()/self.memory) #* self.pixel2um
+                            ay = (vy - cell.velocity_list[-self.memory][1]) * (self.fps.get_fps()/self.memory) #* self.pixel2um
+                            amagnitude = np.sqrt(ax**2 + ay**2)
+                            acceleration = [ax,ay,amagnitude]
 
                 
                         #find blur of original crop
@@ -341,6 +345,7 @@ class VideoThread(QThread):
                         cell.add_time(self.time_stamp) #original in ms
                         cell.add_position([current_pos[0], current_pos[1]])
                         cell.add_velocity(velocity)
+                        cell.add_acceleration(acceleration)
                         cell.add_crop(new_crop)
                         cell.add_area(area)
                         cell.add_blur(blur)
