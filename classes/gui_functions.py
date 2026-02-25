@@ -355,8 +355,6 @@ class MainWindow(QtWidgets.QMainWindow):
                         self.data_buffers[i] = self.data_buffers[i][-self.max_points:]  # keep last N points
                         self.curves[i].setData(self.data_buffers[i])
 
-                    
-
                 except Exception as e:
                     self.tbprint("Error updating coil currents: {}".format(e))
 
@@ -1177,8 +1175,6 @@ class MainWindow(QtWidgets.QMainWindow):
             
             
         
-        
-
     
 
     def update_croppedimage(self, frame, recoreded_frame):
@@ -1207,7 +1203,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.croppedresult.write(recoreded_frame)
 
     
-
     def croppedrecordfunction(self):
         """Toggle recording of cropped robot view."""
         if self.cap is not None:
