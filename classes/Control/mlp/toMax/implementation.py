@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import itertools
 
-import gurobipy as gp
-from gurobipy import GRB
+#import gurobipy as gp
+#from gurobipy import GRB
 import sys
 import json
 import scipy.io as sio
